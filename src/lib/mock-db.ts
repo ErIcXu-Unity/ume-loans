@@ -153,7 +153,7 @@ const applications: LoanApplication[] = [
       {
         status: "Under Review",
         timestamp: "2024-12-15T09:00:00Z",
-        notes: "Assigned for review — education loan assessment",
+        notes: "Assigned for review - education loan assessment",
       },
     ],
   },
@@ -176,7 +176,7 @@ const applications: LoanApplication[] = [
       {
         status: "Under Review",
         timestamp: "2024-12-12T08:15:00Z",
-        notes: "Priority review — high value application",
+        notes: "Priority review - high value application",
       },
       {
         status: "Approved",
@@ -227,7 +227,7 @@ const applications: LoanApplication[] = [
       {
         status: "Under Review",
         timestamp: "2024-12-10T10:30:00Z",
-        notes: "Flagged — loan amount exceeds 4x annual income",
+        notes: "Flagged - loan amount exceeds 4x annual income",
       },
       {
         status: "Rejected",
