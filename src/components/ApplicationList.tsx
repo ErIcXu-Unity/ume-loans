@@ -2,7 +2,7 @@ import { LoanApplication } from "@/types/loan";
 import { StatusBadge } from "./StatusBadge";
 
 const formatCurrency = (amount: number) =>
-  new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD", maximumFractionDigits: 0 }).format(amount);
+  new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD" }).format(amount);
 
 interface ApplicationListProps {
   applications: LoanApplication[];

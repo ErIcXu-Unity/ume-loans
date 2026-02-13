@@ -33,7 +33,7 @@ export function StatusActions({ currentStatus, isPending, onAction }: StatusActi
     return (
       <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
         <p className="text-sm text-gray-600">
-          This application has been finalized -- no further changes are allowed.
+          This application has been finalized - no further changes are allowed.
         </p>
       </div>
     );

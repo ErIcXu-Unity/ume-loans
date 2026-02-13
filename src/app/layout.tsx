@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UME Loans — Loan Application Portal",
+  title: "UME Loans - Loan Application Portal",
   description: "Internal loan application dashboard for UME Loans officers",
 };
 

@@ -4,7 +4,7 @@ import { StatusActions } from "./StatusActions";
 import { StatusTimeline } from "./StatusTimeline";
 
 const formatCurrency = (amount: number) =>
-  new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD", maximumFractionDigits: 0 }).format(amount);
+  new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD" }).format(amount);
 
 const formatDate = (dateStr: string) => {
   try {
