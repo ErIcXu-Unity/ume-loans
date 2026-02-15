@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { LoanApplication, ApplicationStatus } from "@/types/loan";
 import { updateApplicationStatusAction } from "@/actions/update-status";
 import { DashboardSummary } from "./DashboardSummary";
@@ -13,21 +14,36 @@ interface LoanDashboardProps {
 }
 
 export function LoanDashboard({ initialApplications }: LoanDashboardProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [applications, setApplications] = useState(initialApplications);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [mobileView, setMobileView] = useState<"list" | "detail">("list");
+  const selectedId = searchParams.get("app");
+  const [mobileView, setMobileView] = useState<"list" | "detail">(
+    selectedId ? "detail" : "list"
+  );
   const [isPending, startTransition] = useTransition();
 
   const selectedApplication = applications.find((a) => a.id === selectedId) ?? null;
 
-  function handleSelect(id: string) {
-    setSelectedId(id);
-    setMobileView("detail");
-  }
+  const handleSelect = useCallback(
+    (id: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("app", id);
+      router.push(`${pathname}?${params.toString()}`);
+      setMobileView("detail");
+    },
+    [router, pathname, searchParams]
+  );
 
-  function handleBack() {
+  const handleBack = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("app");
+    const qs = params.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname);
     setMobileView("list");
-  }
+  }, [router, pathname, searchParams]);
 
   function handleStatusUpdate(newStatus: ApplicationStatus, notes: string) {
     if (!selectedId) return;
@@ -91,6 +107,18 @@ export function LoanDashboard({ initialApplications }: LoanDashboardProps) {
                 onUpdateStatus={handleStatusUpdate}
                 onBack={handleBack}
               />
+            </div>
+          ) : selectedId ? (
+            <div className="flex h-64 flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-red-300 bg-red-50">
+              <p className="text-sm font-medium text-red-600">
+                Application &ldquo;{selectedId}&rdquo; not found
+              </p>
+              <button
+                onClick={handleBack}
+                className="cursor-pointer rounded-md bg-red-100 px-3 py-1.5 text-xs font-medium text-red-700 transition-colors hover:bg-red-200"
+              >
+                Clear selection
+              </button>
             </div>
           ) : (
             <div className="flex h-64 items-center justify-center rounded-lg border border-dashed border-gray-300 bg-white">
