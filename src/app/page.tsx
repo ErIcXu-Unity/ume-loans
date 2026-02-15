@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getApplications } from "@/lib/mock-db";
 import { LoanDashboard } from "@/components/LoanDashboard";
 
@@ -6,7 +7,9 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <LoanDashboard initialApplications={applications} />
+      <Suspense>
+        <LoanDashboard initialApplications={applications} />
+      </Suspense>
     </main>
   );
 }
