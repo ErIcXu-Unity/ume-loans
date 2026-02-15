@@ -48,7 +48,7 @@ export function StatusActions({ currentStatus, isPending, onAction }: StatusActi
         <button
           onClick={() => onAction("Under Review", "Application moved to review")}
           disabled={isPending}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+          className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
         >
           {isPending ? "Updating..." : "Start Review"}
         </button>
@@ -79,14 +79,14 @@ export function StatusActions({ currentStatus, isPending, onAction }: StatusActi
           <button
             onClick={handleCancel}
             disabled={isPending}
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            className="cursor-pointer rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirm}
             disabled={isPending}
-            className={`rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50 ${
+            className={`cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50 ${
               isReject
                 ? "bg-red-600 hover:bg-red-700"
                 : "bg-green-600 hover:bg-green-700"
@@ -105,14 +105,14 @@ export function StatusActions({ currentStatus, isPending, onAction }: StatusActi
       <button
         onClick={() => setConfirmingAction("Approved")}
         disabled={isPending}
-        className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:opacity-50"
+        className="cursor-pointer rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:opacity-50"
       >
         Approve
       </button>
       <button
         onClick={() => setConfirmingAction("Rejected")}
         disabled={isPending}
-        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+        className="cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
       >
         Reject
       </button>
