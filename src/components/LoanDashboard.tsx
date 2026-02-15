@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useCallback } from "react";
+import { useState, useEffect, useTransition, useCallback } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { LoanApplication, ApplicationStatus } from "@/types/loan";
 import { updateApplicationStatusAction } from "@/actions/update-status";
@@ -19,29 +19,36 @@ export function LoanDashboard({ initialApplications }: LoanDashboardProps) {
   const searchParams = useSearchParams();
 
   const [applications, setApplications] = useState(initialApplications);
-  const selectedId = searchParams.get("app");
+  const [selectedId, setSelectedId] = useState<string | null>(searchParams.get("app"));
   const [mobileView, setMobileView] = useState<"list" | "detail">(
     selectedId ? "detail" : "list"
   );
   const [isPending, startTransition] = useTransition();
 
+  // Keep local state in sync when URL changes externally (back/forward, direct URL)
+  useEffect(() => {
+    setSelectedId(searchParams.get("app"));
+  }, [searchParams]);
+
   const selectedApplication = applications.find((a) => a.id === selectedId) ?? null;
 
   const handleSelect = useCallback(
     (id: string) => {
+      setSelectedId(id); // immediate UI update
       const params = new URLSearchParams(searchParams.toString());
       params.set("app", id);
-      router.push(`${pathname}?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`); // async URL sync
       setMobileView("detail");
     },
     [router, pathname, searchParams]
   );
 
   const handleBack = useCallback(() => {
+    setSelectedId(null); // immediate UI update
     const params = new URLSearchParams(searchParams.toString());
     params.delete("app");
     const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname);
+    router.push(qs ? `${pathname}?${qs}` : pathname); // async URL sync
     setMobileView("list");
   }, [router, pathname, searchParams]);
 
